@@ -15,17 +15,17 @@ const postAuthRequest = async (url, body, res) => {
   // console.log(success, token, userExists, isPasswordValid, anInternalErrorOccurred);
 
   if (success) {
-    res.json({ success: success, token: token });
+    res.json({ success, token });
   } else if (isPasswordValid === false) {
-    res.json({ isPasswordInvalid: isPasswordValid });
+    res.json({ isPasswordValid });
   } else if (userExists === false) {
     // When posting sign in if the user doesn't exist server returns false
-    res.json({ userExists: userExists });
+    res.json({ userExists });
   } else if (userExists === true) {
     // When posting sign up form if the user exists returns true
-    res.json({ userExists: userExists });
+    res.json({ userExists });
   } else if (anInternalErrorOccurred) {
-    res.json({ anInternalErrorOccurred: anInternalErrorOccurred });
+    res.json({ anInternalErrorOccurred });
   }
 };
 
