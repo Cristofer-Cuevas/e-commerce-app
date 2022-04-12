@@ -1,13 +1,18 @@
 import React from "react";
-// import { BrowserRouter as Router, Routes, Route } from "react-router";
-// import Home from "./components/Home";
-import "./styles/indexes.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
+import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
 
 function App() {
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline"> Hello2 world!</h1>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Routes>
+    </Router>
   );
 }
 
