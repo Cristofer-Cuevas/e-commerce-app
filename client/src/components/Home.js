@@ -5,6 +5,7 @@ import searchIcon from "../styles/images/search_black_24dp.svg";
 import accountIcon from "../styles/images/account_circle_white_24dp.svg";
 import menuIcon from "../styles/images/menu_white_24dp.svg";
 import closeIcon from "../styles/images/close_white_24dp.svg";
+import Fashion from "./Fashion.js";
 import { Link } from "react-router-dom";
 
 const Home = () => {
@@ -19,7 +20,7 @@ const Home = () => {
   };
   // Hide menu
   const handleCloseClick = (e) => {
-    navBarRef.current.classList.remove("w-64");
+    navBarRef.current.classList.remove("left-0", "w-64");
     setTimeout(() => {
       navBarRef.current.classList.add("-left-full");
     }, 1);
@@ -68,7 +69,9 @@ const Home = () => {
           </nav>
         </header>
       </section>
-      <main>Hola</main>
+      <main>
+        <Fashion />
+      </main>
     </>
   );
 };
