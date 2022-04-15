@@ -1,4 +1,3 @@
-import pool from "../db/connection.js";
 const userAuthControllers = {};
 
 import fetch, { Headers } from "node-fetch";
