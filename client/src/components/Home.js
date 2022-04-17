@@ -6,6 +6,7 @@ import accountIcon from "../styles/images/account_circle_white_24dp.svg";
 import menuIcon from "../styles/images/menu_white_24dp.svg";
 import closeIcon from "../styles/images/close_white_24dp.svg";
 import Fashion from "./Fashion.js";
+import Jewellery from "./Jewellery";
 import { Link } from "react-router-dom";
 
 const Home = () => {
@@ -32,9 +33,9 @@ const Home = () => {
         <header className="w-11/12 mx-auto overflow">
           <h1 className="font-bold text-4xl text-center text-white pt-8 ">Shop</h1>
           <div className="flex justify-between mt-10">
-            <p className="w-20 text-white">
+            <Link to="/cart" className="w-20 text-white">
               <img className="inline-block" src={cartIcon} alt="Cart" /> CART
-            </p>
+            </Link>
             <Link to="/signin" className="w-26 text-white">
               <img className="inline-block" src={accountIcon} alt="User" /> ACCOUNT
             </Link>
@@ -69,8 +70,9 @@ const Home = () => {
           </nav>
         </header>
       </section>
-      <main>
+      <main className="">
         <Fashion />
+        <Jewellery />
       </main>
     </>
   );
