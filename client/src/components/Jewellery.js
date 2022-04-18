@@ -11,7 +11,7 @@ const Jewellery = () => {
   return (
     <>
       <section className="w-full pb-20">
-        <h1 className="font-bold text-3xl text-center">Man and Woman Fashion</h1>
+        <h1 className="font-bold text-3xl text-center">Jewellery</h1>
         <Products products={data} />
       </section>
     </>
