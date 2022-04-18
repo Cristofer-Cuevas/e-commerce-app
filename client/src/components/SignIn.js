@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { getAuth } from "../fetchMethods/get";
 import { loginPost } from "../fetchMethods/post";
 import { setCookie } from "../utils/utils.js";
+import { Input, Loading, LoginError } from "./ComponentUtils";
 
 const SignIn = () => {
   const [showSpinner, setShowSpinner] = useState(true);
@@ -17,22 +18,24 @@ const SignIn = () => {
   const onClickLoginBtn = (e) => {
     e.preventDefault();
 
-    const emailInpValue = emailInpRef.current.value;
-    const passwordInpValue = passwordInpRef.current.value;
+    const email = emailInpRef.current.value;
+    const password = passwordInpRef.current.value;
+    console.log("hola");
 
-    if (!emailInpValue || !passwordInpValue) {
+    if (!email || !password) {
       console.log("indeed");
       setFormState({ isFormIncomplete: true });
     } else {
       const userCredentials = {
-        email: emailInpValue,
-        password: passwordInpValue,
+        email,
+        password,
       };
+      setFormState({});
       loginPost(userCredentials)
         .then((res) => res.json())
         .then((res) => {
-          if (res.isPasswordValid === false) {
-            setFormState({ isPasswordInvalid: true });
+          if (!res.isPasswordValid || !res.userExists) {
+            setFormState({ isLoginWrong: true });
             console.log("fired");
           }
           if (res.success) {
@@ -60,21 +63,14 @@ const SignIn = () => {
   return (
     <>
       {showSpinner ? (
-        <div className="sk-chase mx-auto mt-20 ">
-          <div className="sk-chase-dot"></div>
-          <div className="sk-chase-dot"></div>
-          <div className="sk-chase-dot"></div>
-          <div className="sk-chase-dot"></div>
-          <div className="sk-chase-dot"></div>
-          <div className="sk-chase-dot"></div>
-        </div>
+        <Loading />
       ) : (
         <main className="w-full h-full flex justify-center items-center">
-          <form className="w-11/12">
+          <form className="w-11/12 sm:w-1/2 lg:w-2/5">
             <h1 className="font-bold text-3xl text-center">Sign in</h1>
-            {formState?.isFormIncomplete ? <p className="text-center text-red-600 mt-5 text-green border-red-500 border-2 rounded-md py-2">Please complete the form</p> : null}
+            {formState?.isFormIncomplete ? <LoginError text="Please complete the form" /> : null}
 
-            {formState?.isPasswordInvalid ? <p className="text-center text-red-600 mt-5 text-green border-red-500 border-2 rounded-md py-2">There was a problem with your email or password.</p> : null}
+            {formState?.isLoginWrong ? <LoginError text="There was a problem with your email or password" /> : null}
             <div className="my-6 w-full bg-mail-icon bg-no-repeat bg-left bg-gray-100 rounded-md  ">
               <Input inputRef={emailInpRef} placeholder="Email" type="email" autoComplete="email" />
             </div>
@@ -93,34 +89,10 @@ const SignIn = () => {
               </Link>
             </p>
           </form>
-          <div class="spinner-box">
-            <div class="circle-border">
-              <div class="circle-core"></div>
-            </div>
-          </div>
         </main>
       )}
     </>
   );
-};
-
-export const LogInForm = ({ getAuth, children }) => {
-  useEffect(() => {
-    getAuth()
-      .then((res) => res.json())
-      .then((res) => console.log(res));
-  }, [getAuth]);
-
-  return (
-    <div>
-      <h1>Log in form</h1>
-      <form>{children}</form>
-    </div>
-  );
-};
-
-export const Input = ({ placeholder, type, inputRef, autoComplete, className }) => {
-  return <input className={`${className || ""} w-full h-16 bg-transparent pl-12 focus:border-transparent outline-none focus:border-sky-500 focus:border-2 focus:rounded-md border-2 border-transparent placeholder:text-slate-600`} ref={inputRef} type={type} placeholder={placeholder} autoComplete={autoComplete} />;
 };
 
 export default SignIn;
