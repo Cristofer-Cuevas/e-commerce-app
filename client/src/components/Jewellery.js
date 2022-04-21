@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
-import { Products, Loading } from "./ComponentUtils";
+import React, { useEffect, useState } from "react";
+import { Products } from "./ComponentUtils";
 const Jewellery = () => {
   const [data, setData] = useState(false);
 
