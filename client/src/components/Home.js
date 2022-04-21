@@ -6,13 +6,17 @@ import menuIcon from "../styles/images/menu_white_24dp.svg";
 import closeIcon from "../styles/images/close_white_24dp.svg";
 import { Link } from "react-router-dom";
 
-const Home = ({ children }) => {
+const Home = ({ Fashion, Jewellery, Electronic }) => {
   return (
     <>
-      <section className="bg-hero-image bg-cover bg-center   h-5/6">
+      <section className="bg-hero-image bg-cover bg-center h-5/6">
         <Header />
       </section>
-      <main className="">{children}</main>
+      <main className="">
+        {Fashion ? <Fashion /> : null}
+        {Jewellery ? <Jewellery /> : null}
+        {Electronic ? <Electronic /> : null}
+      </main>
     </>
   );
 };
