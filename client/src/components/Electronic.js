@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Products } from "./ComponentUtils";
-const Electronic = () => {
+const Electronic = ({ setProductsInCart }) => {
   const [data, setData] = useState(false);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ const Electronic = () => {
     <>
       <section className="w-full pb-20">
         <h1 className="font-bold text-3xl text-center">Electronic</h1>
-        <Products products={data} />
+        <Products setProductsInCart={setProductsInCart} products={data} />
       </section>
     </>
   );
