@@ -21,10 +21,10 @@ export const LoginError = ({ text }) => {
 
 // input for searching products
 export const InputSearch = ({ inputRef }) => {
-  return <input className=" z-0 w-full h-10 rounded-l " ref={inputRef} type="search" autoComplete="on" placeholder="Search for products" />;
+  return <input className="px-4 z-0 w-full h-10 rounded-l " ref={inputRef} type="search" autoComplete="on" placeholder="Search for products" />;
 };
 
-export const Products = ({ products }) => {
+export const Products = ({ products, setProductsInCart }) => {
   const num = useRef(0);
   const carouselRef = useRef(null);
   const numOfProducts = products.length - 1;
@@ -57,6 +57,15 @@ export const Products = ({ products }) => {
     carouselRef.current.style.transform = `translateX(-${num.current}00%)`;
   };
 
+  const handleBuyNowClick = (e) => {
+    const clickedProductId = parseInt(e.target.dataset.index);
+
+    const clickedProduct = products.filter((product) => product.id === clickedProductId);
+    console.log(clickedProduct);
+
+    setProductsInCart((products) => [...products, ...clickedProduct]);
+  };
+
   return (
     <>
       {products ? (
@@ -65,12 +74,14 @@ export const Products = ({ products }) => {
             {products.map((product) => {
               return (
                 <div key={product.id} className="w-full mt-10 h-prodCont">
-                  <p className="font-bold text-center px-6">{product.title}</p>
+                  <p className="font-semibold text-center px-6">{product.title}</p>
                   <p className="my-6 text-center">
                     <span className="text-orange-500 ">Price</span> $ {product.price}
                   </p>
                   <img className="w-48 mx-auto" src={product.image} alt="Clothe" />
-                  <button className="mx-auto block my-8 font-bold text-orange-500">Buy Now</button>
+                  <button className="mx-auto block my-8 font-bold text-orange-500" data-index={product.id} onClick={handleBuyNowClick}>
+                    Buy Now
+                  </button>
                 </div>
               );
             })}
