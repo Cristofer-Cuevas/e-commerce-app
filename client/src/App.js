@@ -55,7 +55,7 @@ function App() {
               </Home>
             }
           />
-          <Route path="/cart" element={<Cart productsInCart={productsInCart} />} />
+          <Route path="/cart" element={<Cart setProductsInCart={setProductsInCart} productsInCart={productsInCart} />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
         </Routes>
