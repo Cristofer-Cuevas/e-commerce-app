@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import SignIn from "./components/SignIn";
@@ -7,10 +7,15 @@ import Electronic from "./components/Electronic";
 import Jewellery from "./components/Jewellery";
 import Fashion from "./components/Fashion";
 import Cart from "./components/Cart";
+import Account from "./components/Account";
+
+export const UserContext = createContext();
 
 function App() {
+  const [user, setUser] = useState(null);
   const [productsCount, setProductsCount] = useState(null);
   const [productsInCart, setProductsInCart] = useState([]);
+  console.log(user);
 
   useEffect(() => {
     setProductsCount(productsInCart.length);
@@ -18,13 +23,13 @@ function App() {
 
   console.log(productsCount);
   return (
-    <>
+    <UserContext.Provider value={user}>
       <Router>
         <Routes>
           <Route
             path="/"
             element={
-              <Home>
+              <Home setUser={setUser}>
                 <Fashion setProductsInCart={setProductsInCart} />
                 <Jewellery setProductsInCart={setProductsInCart} />
                 <Electronic setProductsInCart={setProductsInCart} />
@@ -56,11 +61,13 @@ function App() {
             }
           />
           <Route path="/cart" element={<Cart setProductsInCart={setProductsInCart} productsInCart={productsInCart} />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
+
+          <Route path="/account" element={<Account user={user} />} />
+          <Route path="/signin" element={<SignIn user={user} />} />
+          <Route path="/signup" element={<SignUp user={user} />} />
         </Routes>
       </Router>
-    </>
+    </UserContext.Provider>
   );
 }
 
