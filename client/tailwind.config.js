@@ -34,6 +34,12 @@ module.exports = {
         boxCont: "38rem",
         prodCont: "30rem",
       },
+      transitionProperty: {
+        transform: "transform",
+        transitionDuration: {
+          1: "1s",
+        },
+      },
     },
   },
   plugins: [],
