@@ -9,12 +9,12 @@ const postAuthRequest = async (url, body, res) => {
     body,
   });
 
-  const { success, token, userExists, isPasswordValid, anInternalErrorOccurred } = await response.json();
+  const { success, token, user, userExists, isPasswordValid, anInternalErrorOccurred } = await response.json();
 
   // console.log(success, token, userExists, isPasswordValid, anInternalErrorOccurred);
 
   if (success) {
-    res.json({ success, token });
+    res.json({ success, token, user });
   } else if (isPasswordValid === false) {
     res.json({ isPasswordValid });
   } else if (userExists === false) {
