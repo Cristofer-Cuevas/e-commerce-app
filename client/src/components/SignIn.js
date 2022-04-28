@@ -1,13 +1,10 @@
-import React, { useRef, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { getAuth } from "../fetchMethods/get";
+import React, { useRef, useState } from "react";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import { loginPost } from "../fetchMethods/post";
 import { setCookie } from "../utils/utils.js";
-import { Input, Loading, LoginError } from "./ComponentUtils";
+import { Input, LoginError } from "./ComponentUtils";
 
-const SignIn = () => {
-  const [showSpinner, setShowSpinner] = useState(true);
-
+const SignIn = ({ user, setUser }) => {
   const [formState, setFormState] = useState({});
 
   const navigate = useNavigate();
@@ -36,9 +33,9 @@ const SignIn = () => {
         .then((res) => {
           if (!res.isPasswordValid || !res.userExists) {
             setFormState({ isLoginWrong: true });
-            console.log("fired");
           }
           if (res.success) {
+            setUser(res.user);
             setCookie(res.token);
             navigate("/", { replace: true });
           }
@@ -47,23 +44,10 @@ const SignIn = () => {
     }
   };
 
-  useEffect(() => {
-    getAuth()
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.unauthorized) {
-          setShowSpinner(false);
-          console.log(res);
-        } else if (res.success) {
-          navigate("/", { replace: true });
-        }
-      });
-  }, [navigate]);
-
   return (
     <>
-      {showSpinner ? (
-        <Loading />
+      {user ? (
+        <Navigate to="/" replace />
       ) : (
         <main className="w-full h-full flex justify-center items-center">
           <form className="w-11/12 sm:w-1/2 lg:w-2/5">
