@@ -13,10 +13,8 @@ const Cart = ({ setProductsInCart, productsInCart }) => {
       }
       return product;
     });
-
     setProductsInCart(products);
   };
-
   const handleSubtractClick = (e) => {
     const index = parseInt(e.target.dataset.index);
     const products = productsInCart.map((product) => {
@@ -49,7 +47,7 @@ const Cart = ({ setProductsInCart, productsInCart }) => {
         {productsInCart
           ? productsInCart.map((product) => {
               return (
-                <div key={product.id} data-index={product.id} className="flex w-4/5 mt-12">
+                <div key={product.id} data-index={product.id} className="flex w-4/5 mt-12 border-b border-gray-400 border-solid pb-4">
                   <div className="img">
                     <img className="w-32" src={product.image} alt="product" />
                   </div>
@@ -77,6 +75,16 @@ const Cart = ({ setProductsInCart, productsInCart }) => {
               );
             })
           : null}
+        <div className="w-4/5">
+          <div className="w-full flex justify-between items-center border border-gray-400 border-solid h-10 mt-10 px-4">
+            <p className="font-medium">Total cost</p>
+            <p className="font-semibold">$ {productsInCart.reduce((previousValue, currentValue) => (previousValue += currentValue.price), 0)}</p>
+          </div>
+          <p className="text-sm mt-2">
+            Available credit: <span className="text-green-600 font-medium">$ 500</span>
+          </p>
+          <button className="text-white bg-sky-700 w-full my-6 h-12">PROCEED TO BUY</button>
+        </div>
       </section>
     </>
   );
