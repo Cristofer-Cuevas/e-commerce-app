@@ -1,24 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { Loading, NavBar } from "./ComponentUtils";
-import { useNavigate } from "react-router-dom";
+import { NavBar } from "./ComponentUtils";
+import { Navigate } from "react-router-dom";
 import { getUserProducts } from "../fetchMethods/get";
 import accountIcon from "../styles/images/account_circle_white_24dp.svg";
 
-const Account = () => {
+const Account = ({ user }) => {
   const [products, setProducts] = useState(null);
-  const [showSpinner, setShowSpinner] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    getUserProducts().then((res) => {
-      if (res.success) setShowSpinner(false);
-      setProducts(res.products);
-    });
-  }, []);
+    if (user) {
+      getUserProducts("purchased_products").then((res) => {
+        setProducts(res.products);
+      });
+    }
+  }, [user]);
+
+  console.log(user);
 
   return (
     <>
-      {showSpinner ? null : ( // <Loading />
+      {/* If user doesn't exist go to the /signin */}
+      {!user ? (
+        <Navigate to="/signin" replace />
+      ) : (
         <section>
           <header>
             <div>
