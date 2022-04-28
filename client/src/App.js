@@ -8,6 +8,7 @@ import Jewellery from "./components/Jewellery";
 import Fashion from "./components/Fashion";
 import Cart from "./components/Cart";
 import Account from "./components/Account";
+import { getAuth } from "./fetchMethods/get";
 
 export const UserContext = createContext();
 
@@ -15,6 +16,10 @@ function App() {
   const [user, setUser] = useState(null);
   const [productsCount, setProductsCount] = useState(null);
   const [productsInCart, setProductsInCart] = useState([]);
+
+  useEffect(() => {
+    getAuth().then((res) => setUser(res.user));
+  }, []);
 
   useEffect(() => {
     setProductsCount(productsInCart.length);
