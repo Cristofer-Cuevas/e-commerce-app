@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Products } from "./ComponentUtils";
+import { getProducts } from "../fetchMethods/get";
+
 const Electronic = ({ setProductsInCart }) => {
   const [data, setData] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:3001/electronics")
-      .then((res) => res.json())
-      .then((res) => setData(res.electronics));
+    getProducts("electronics").then((res) => setData(res.electronics));
   }, []);
   return (
     <>
