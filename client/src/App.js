@@ -15,7 +15,6 @@ function App() {
   const [user, setUser] = useState(null);
   const [productsCount, setProductsCount] = useState(null);
   const [productsInCart, setProductsInCart] = useState([]);
-  console.log(user);
 
   useEffect(() => {
     setProductsCount(productsInCart.length);
@@ -63,8 +62,8 @@ function App() {
           <Route path="/cart" element={<Cart setProductsInCart={setProductsInCart} productsInCart={productsInCart} />} />
 
           <Route path="/account" element={<Account user={user} />} />
-          <Route path="/signin" element={<SignIn user={user} />} />
-          <Route path="/signup" element={<SignUp user={user} />} />
+          <Route path="/signin" element={<SignIn setUser={setUser} user={user} />} />
+          <Route path="/signup" element={<SignUp setUser={setUser} user={user} />} />
         </Routes>
       </Router>
     </UserContext.Provider>
