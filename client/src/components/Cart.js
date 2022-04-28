@@ -1,38 +1,42 @@
 import React, { useEffect, useState, useRef } from "react";
 
-const Cart = ({ productsInCart }) => {
-  const [products, setProducts] = useState();
+const Cart = ({ setProductsInCart, productsInCart }) => {
   const inpuRef = useRef(0);
 
-  useEffect(() => {
-    setProducts(productsInCart);
-  }, [productsInCart]);
+  const handleAddClick = (e) => {
+    const index = parseInt(e.target.dataset.index);
+    const products = productsInCart.map((product) => {
+      if (index === product.id) {
+        const sum = product.price / product.quantity;
+        ++product.quantity;
+        product.price += sum;
+      }
+      return product;
+    });
+
+    setProductsInCart(products);
+  };
+
+  const handleSubtractClick = (e) => {
+    const index = parseInt(e.target.dataset.index);
+    const products = productsInCart.map((product) => {
+      if (index === product.id) {
+        if (product.quantity > 1) {
+          const sum = product.price / product.quantity;
+          --product.quantity;
+          product.price = sum * product.quantity;
+        }
+      }
+      return product;
+    });
+
+    setProductsInCart(products);
+  };
 
   const handleRemoveClick = (e) => {
-    console.log(inpuRef.current.value);
-    const index = parseInt(e.target.dataset.index);
-
-    setProducts((products) => {
-      return products.map((product) => {
-        if (index === product.id) {
-          const sum = product.price / (inpuRef.current.value - 1);
-          product.price += sum;
-        }
-        return product;
-      });
-    });
-
-    console.log(products);
-    ++e.target.nextElementSibling.value;
-    productsInCart.forEach((product) => {
-      if (parseInt(e.target.dataset.index) === product.id) {
-        product.quantity = e.target.nextElementSibling.value;
-      }
-    });
-
-    console.log(productsInCart);
+    const clickedElement = parseInt(e.target.dataset.index);
+    setProductsInCart((products) => products.filter((product) => product.id !== clickedElement));
   };
-  const handleAddClick = () => {};
 
   const handleInpChange = (e) => {
     console.log(e.target.value);
@@ -42,8 +46,8 @@ const Cart = ({ productsInCart }) => {
     <>
       <section className="flex flex-col items-center">
         <h2 className="text-2xl font-bold m-4">YOUR CART</h2>
-        {products
-          ? products.map((product) => {
+        {productsInCart
+          ? productsInCart.map((product) => {
               return (
                 <div key={product.id} data-index={product.id} className="flex w-4/5 mt-12">
                   <div className="img">
@@ -53,18 +57,20 @@ const Cart = ({ productsInCart }) => {
                     <div className="">
                       <h3 className="font-medium  text-sm">{product.title}</h3>
                       <div className="flex  items-center my-4 border border-black border-solid w-fit py-1 px-2">
-                        <button data-index={product.id} onClick={handleRemoveClick} className="mr-4 w-4">
-                          {/* <img className="w-4" src={removeIcon} alt="add" /> */} -
+                        <button data-index={product.id} onClick={handleSubtractClick} className="mr-4 w-4">
+                          -
                         </button>
-                        <input className="w-6 text-center" type="number" value={product.quantity || 1} min="0" max="20" readOnly onChange={handleInpChange} ref={inpuRef} />
-                        <button onClick={handleAddClick} className="ml-4">
-                          {/* <img className="w-4" src={addIcon} alt="substract" /> */} +
+                        <input className="w-6 text-center" type="number" onChange={handleInpChange} ref={inpuRef} value={product.quantity} readOnly />
+                        <button data-index={product.id} onClick={handleAddClick} className="ml-4">
+                          +
                         </button>
                       </div>
                     </div>
                     <div className="">
                       <p className="font-medium">$ {product.price}</p>
-                      <button className="text-xs">Remove</button>
+                      <button className="text-xs" data-index={product.id} onClick={handleRemoveClick}>
+                        Remove
+                      </button>
                     </div>
                   </div>
                 </div>
