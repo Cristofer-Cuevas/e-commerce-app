@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
+import closeIcon from "../styles/images/close_white_24dp.svg";
 
 const Cart = ({ setProductsInCart, productsInCart }) => {
+  const modalRef = useRef();
   const inpuRef = useRef(0);
 
   const handleAddClick = (e) => {
@@ -40,6 +42,24 @@ const Cart = ({ setProductsInCart, productsInCart }) => {
     console.log(e.target.value);
   };
 
+  const totalCost = (
+    <div className="w-full flex justify-between items-center border border-gray-400 border-solid h-10 mt-10 px-4">
+      <p className="font-medium">Total cost</p>
+      <p className="font-semibold">$ {productsInCart.reduce((previousValue, currentValue) => (previousValue += currentValue.price), 0)}</p>
+    </div>
+  );
+
+  const handleCloseModal = (e) => {
+    const showOrHideModal = e.target.dataset.modal;
+    if (showOrHideModal === "show") {
+      modalRef.current.classList.remove("invisible");
+      modalRef.current.classList.add("visible");
+    } else if (showOrHideModal === "hide") {
+      modalRef.current.classList.remove("visible");
+      modalRef.current.classList.add("invisible");
+    }
+  };
+
   return (
     <>
       <section className="flex flex-col items-center">
@@ -48,8 +68,8 @@ const Cart = ({ setProductsInCart, productsInCart }) => {
           ? productsInCart.map((product) => {
               return (
                 <div key={product.id} data-index={product.id} className="flex w-4/5 mt-12 border-b border-gray-400 border-solid pb-4">
-                  <div className="img">
-                    <img className="w-32" src={product.image} alt="product" />
+                  <div className="w-1/2">
+                    <img className="" src={product.image} alt="product" />
                   </div>
                   <div className="ml-10">
                     <div className="">
@@ -76,14 +96,28 @@ const Cart = ({ setProductsInCart, productsInCart }) => {
             })
           : null}
         <div className="w-4/5">
-          <div className="w-full flex justify-between items-center border border-gray-400 border-solid h-10 mt-10 px-4">
-            <p className="font-medium">Total cost</p>
-            <p className="font-semibold">$ {productsInCart.reduce((previousValue, currentValue) => (previousValue += currentValue.price), 0)}</p>
-          </div>
+          {totalCost}
           <p className="text-sm mt-2">
             Available credit: <span className="text-green-600 font-medium">$ 500</span>
           </p>
-          <button className="text-white bg-sky-700 w-full my-6 h-12">PROCEED TO BUY</button>
+          <button onClick={handleCloseModal} data-modal="show" className="text-white bg-sky-700 w-full my-6 h-12">
+            PROCEED TO BUY
+          </button>
+        </div>
+        <div ref={modalRef} className="invisible shadow-6xl fixed w-11/12 bg-white top-1/4 rounded	">
+          <div className="flex justify-between items-center px-4 bg-red-500 text-white h-14 rounded-t">
+            <h3>Confirm purchase</h3>
+
+            <img className="w-6" onClick={handleCloseModal} data-modal="hide" src={closeIcon} alt="Close" />
+          </div>
+          {totalCost}
+          <p className="my-10 px-4 text-center">
+            Your credit will be: <span className="text-green-600 font-medium">$100</span> after the purchase.<span className="text-red-600"> Do you want to continue? </span>
+          </p>
+          <div className="flex justify-around my-6">
+            <button className="h-10 bg-red-600 w-32 text-white font-medium">Yes!</button>
+            <button className="h-10 border-2 border-red-600 border-solid w-32 font-medium text-red-600">No</button>
+          </div>
         </div>
       </section>
     </>
