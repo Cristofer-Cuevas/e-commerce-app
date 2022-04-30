@@ -116,7 +116,7 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
         <div className="w-4/5">
           {totalCost}
           <p className="text-sm mt-2">
-            Available credit: <span className="text-green-600 font-medium">$ {user.credit}</span>
+            Available credit: <span className="text-green-600 font-medium">$ {user?.credit || 0}</span>
           </p>
           <button onClick={handleCloseModal} data-modal="show" className="text-white bg-sky-700 w-full my-6 h-12">
             PROCEED TO BUY
@@ -129,7 +129,7 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
           </div>
           {totalCost}
           <p className="my-10 px-4 text-center">
-            Your credit will be: <span className="text-green-600 font-medium">{user.credit - totalPrice} </span> after the purchase.<span className="text-red-600"> Do you want to continue? </span>
+            Your credit will be: <span className="text-green-600 font-medium">{user?.credit - totalPrice} </span> after the purchase.<span className="text-red-600"> Do you want to continue? </span>
           </p>
           <div className="flex justify-around my-6">
             <button onClick={handleYesClick} className="h-10 bg-red-600 w-32 text-white font-medium">
