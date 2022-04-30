@@ -79,7 +79,7 @@ shopControllers.getUserCartProducts = async (req, res) => {
   }
 };
 
-shopControllers.postPurchasedProducts = async (req, res) => {
+shopControllers.postPurchaseProducts = async (req, res) => {
   const { user } = await getAuthUser(req);
 
   const { products } = req.body;
@@ -112,4 +112,19 @@ shopControllers.postPurchasedProducts = async (req, res) => {
     res.json({ success: false });
   }
 };
+
+shopControllers.getPurchasedProducts = async (req, res) => {
+  const { user } = await getAuthUser(req);
+  console.log(user);
+
+  const { rows: products } = await pool.query("SELECT * FROM purchased_products WHERE user_id = $1", [user.id]);
+
+  console.log(products);
+  if (products[0]) {
+    res.json({ success: true, products: products });
+  } else {
+    res.json({ success: false });
+  }
+};
+
 export default shopControllers;
