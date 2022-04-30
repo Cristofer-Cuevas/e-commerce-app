@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useRef } from "react";
 import { postProductsToPurchase } from "../fetchMethods/post";
 import closeIcon from "../styles/images/close_white_24dp.svg";
 
