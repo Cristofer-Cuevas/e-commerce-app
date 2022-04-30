@@ -18,7 +18,6 @@ const Account = ({ user }) => {
 
   return (
     <>
-      {/* If user doesn't exist go to the /signin */}
       {!user ? (
         <Navigate to="/signin" replace />
       ) : (
