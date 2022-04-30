@@ -9,13 +9,12 @@ const Account = ({ user }) => {
 
   useEffect(() => {
     if (user) {
-      getUserProducts("purchased_products").then((res) => {
+      getUserProducts("purchased-products").then((res) => {
+        console.log(res);
         setProducts(res.products);
       });
     }
   }, [user]);
-
-  console.log(user);
 
   return (
     <>
