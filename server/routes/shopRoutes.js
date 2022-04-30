@@ -9,6 +9,8 @@ shopRoutes.get("/jewellery", shopControllers.getJewellery);
 
 shopRoutes.get("/electronics", shopControllers.getElectronics);
 
-shopRoutes.post("/purchase-products", shopControllers.postPurchasedProducts);
+shopRoutes.post("/purchase-products", shopControllers.postPurchaseProducts);
+
+shopRoutes.get("/purchased-products", shopControllers.getPurchasedProducts);
 
 export default shopRoutes;
