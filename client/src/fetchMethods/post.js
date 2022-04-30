@@ -29,16 +29,16 @@ export const signupPost = ({ name, lastName, email, password }) => {
   });
 };
 
-export const postProductsToPurchase = (productsId) => {
+export const postProductsToPurchase = (products) => {
   const cookieValue = getCookie();
-  return fetch("http://localhost:3001/signup", {
+  return fetch("http://localhost:3001/purchase-products", {
     method: "POST",
     headers: new Headers({
       Authorization: cookieValue,
       "Content-Type": "application/json",
     }),
     body: JSON.stringify({
-      products: productsId,
+      products,
     }),
   }).then((res) => res.json());
 };
