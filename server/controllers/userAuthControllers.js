@@ -1,3 +1,4 @@
+import pool from "../db/connection.js";
 const userAuthControllers = {};
 
 import fetch, { Headers } from "node-fetch";
@@ -14,6 +15,8 @@ const postAuthRequest = async (url, body, res) => {
   // console.log(success, token, userExists, isPasswordValid, anInternalErrorOccurred);
 
   if (success) {
+    const { rows: credit } = await pool.query("SELECT credit FROM credits WHERE user_id = $1", [user.id]);
+    user.credit = credit[0].credit;
     res.json({ success, token, user });
   } else if (isPasswordValid === false) {
     res.json({ isPasswordValid });
@@ -64,6 +67,8 @@ userAuthControllers.successRedirect = async (req, res) => {
   const { success, user, unauthorized } = await response.json();
 
   if (success) {
+    const { rows: credit } = await pool.query("SELECT credit FROM credits WHERE user_id = $1", [user.id]);
+    user.credit = credit[0].credit;
     res.json({ success, user });
   } else {
     res.json({ success, unauthorized });
