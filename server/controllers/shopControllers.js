@@ -1,7 +1,23 @@
 import pool from "../db/connection.js";
 import fetch from "node-fetch";
+import { Headers } from "node-fetch";
 
 const shopControllers = {};
+
+const getAuthUser = async (req) => {
+  const { authorization: token } = req.headers;
+  const response = await fetch("https://user-auth-restful-api.herokuapp.com/protected", {
+    method: "GET",
+    headers: new Headers({
+      "Content-Type": "application/json",
+      Authorization: token,
+    }),
+  });
+
+  const user = await response.json();
+
+  return user;
+};
 
 shopControllers.getClothes = async (req, res) => {
   const womenClothing = await fetch("https://fakestoreapi.com/products/category/women's clothing");
@@ -27,15 +43,7 @@ shopControllers.getElectronics = async (req, res) => {
 };
 
 shopControllers.getUserPurchasedProducts = async (req, res) => {
-  const { authorization: token } = req.headers;
-  const response = await fetch("https://user-auth-restful-api.herokuapp.com/protected", {
-    method: "GET",
-    headers: new Headers({
-      "Content-Type": "application/json",
-      Authorization: token,
-    }),
-  });
-  const { success, user, unauthorized } = await response.json();
+  const { success, user, unauthorized } = await getAuthUser(req);
 
   if (success) {
     const { rows: purchasedProducts } = await pool.query("SELECT product_id, price, quantity, date FROM purchased_products where id = $1", [user.id]);
@@ -54,15 +62,7 @@ shopControllers.getUserPurchasedProducts = async (req, res) => {
 
 //  Get products saved in cart_products
 shopControllers.getUserCartProducts = async (req, res) => {
-  const { authorization: token } = req.headers;
-  const response = await fetch("https://user-auth-restful-api.herokuapp.com/protected", {
-    method: "GET",
-    headers: new Headers({
-      "Content-Type": "application/json",
-      Authorization: token,
-    }),
-  });
-  const { success, user, unauthorized } = await response.json();
+  const { success, user, unauthorized } = await getAuthUser(req);
 
   if (success) {
     const { rows: cartProducts } = await pool.query("SELECT product_id, quantity FROM cart_products where id = $1", [user.id]);
@@ -76,6 +76,40 @@ shopControllers.getUserCartProducts = async (req, res) => {
     res.json({ success, products });
   } else {
     res.json({ success, unauthorized });
+  }
+};
+
+shopControllers.postPurchasedProducts = async (req, res) => {
+  const { user } = await getAuthUser(req);
+
+  const { products } = req.body;
+
+  const date = new Date();
+  const formattedDate = date.toLocaleString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+
+  if (user) {
+    const totalPrice = products.reduce((previousValue, currentValue) => (previousValue += currentValue.price), 0);
+    const { rows: credits } = await pool.query("SELECT credit FROM credits WHERE user_id = $1", [user.id]);
+    if (credits[0]) {
+      const posOrNeg = Math.sign(credits[0].credit - totalPrice);
+      if (posOrNeg === -1) {
+        res.json({ success: false, hasEnoughCredit: false });
+      } else if (posOrNeg === 1) {
+        const { rows: newCredit } = await pool.query("UPDATE credits SET credit = credit - $1 WHERE user_id = $2 RETURNING credit", [totalPrice, user.id]);
+        for (let product of products) {
+          await pool.query("INSERT INTO purchased_products VALUES ($1, $2, $3, $4, $5)", [user.id, product.id, product.price, product.quantity, formattedDate]);
+        }
+        res.json({ success: true, credit: newCredit[0].credit });
+      }
+    } else {
+      res.json({ success: false });
+    }
+  } else {
+    res.json({ success: false });
   }
 };
 export default shopControllers;
