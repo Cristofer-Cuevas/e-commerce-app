@@ -1,9 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
+import { postProductsToPurchase } from "../fetchMethods/post";
 import closeIcon from "../styles/images/close_white_24dp.svg";
 
-const Cart = ({ setProductsInCart, productsInCart }) => {
+const Cart = ({ setProductsInCart, productsInCart, user }) => {
   const modalRef = useRef();
   const inpuRef = useRef(0);
+
+  console.log(user);
 
   const handleAddClick = (e) => {
     const index = parseInt(e.target.dataset.index);
@@ -42,10 +45,12 @@ const Cart = ({ setProductsInCart, productsInCart }) => {
     console.log(e.target.value);
   };
 
+  const totalPrice = productsInCart.reduce((previousValue, currentValue) => (previousValue += currentValue.price), 0);
+
   const totalCost = (
     <div className="w-full flex justify-between items-center border border-gray-400 border-solid h-10 mt-10 px-4">
       <p className="font-medium">Total cost</p>
-      <p className="font-semibold">$ {productsInCart.reduce((previousValue, currentValue) => (previousValue += currentValue.price), 0)}</p>
+      <p className="font-semibold">$ {totalPrice}</p>
     </div>
   );
 
@@ -59,6 +64,22 @@ const Cart = ({ setProductsInCart, productsInCart }) => {
       modalRef.current.classList.add("invisible");
     }
   };
+
+  const handleYesClick = () => {
+    postProductsToPurchase(
+      productsInCart.map((product) => {
+        return { id: product.id, quantity: product.quantity, price: product.price };
+      })
+    ).then((res) => {
+      if (res.success) {
+        console.log(user);
+        user.credit = res.credit;
+        setProductsInCart([]);
+      }
+      console.log(res);
+    });
+  };
+  const handleNoClick = () => {};
 
   return (
     <>
@@ -98,7 +119,7 @@ const Cart = ({ setProductsInCart, productsInCart }) => {
         <div className="w-4/5">
           {totalCost}
           <p className="text-sm mt-2">
-            Available credit: <span className="text-green-600 font-medium">$ 500</span>
+            Available credit: <span className="text-green-600 font-medium">$ {user.credit}</span>
           </p>
           <button onClick={handleCloseModal} data-modal="show" className="text-white bg-sky-700 w-full my-6 h-12">
             PROCEED TO BUY
@@ -107,16 +128,19 @@ const Cart = ({ setProductsInCart, productsInCart }) => {
         <div ref={modalRef} className="invisible shadow-6xl fixed w-11/12 bg-white top-1/4 rounded	">
           <div className="flex justify-between items-center px-4 bg-red-500 text-white h-14 rounded-t">
             <h3>Confirm purchase</h3>
-
             <img className="w-6" onClick={handleCloseModal} data-modal="hide" src={closeIcon} alt="Close" />
           </div>
           {totalCost}
           <p className="my-10 px-4 text-center">
-            Your credit will be: <span className="text-green-600 font-medium">$100</span> after the purchase.<span className="text-red-600"> Do you want to continue? </span>
+            Your credit will be: <span className="text-green-600 font-medium">{user.credit - totalPrice} </span> after the purchase.<span className="text-red-600"> Do you want to continue? </span>
           </p>
           <div className="flex justify-around my-6">
-            <button className="h-10 bg-red-600 w-32 text-white font-medium">Yes!</button>
-            <button className="h-10 border-2 border-red-600 border-solid w-32 font-medium text-red-600">No</button>
+            <button onClick={handleYesClick} className="h-10 bg-red-600 w-32 text-white font-medium">
+              Yes!
+            </button>
+            <button onClick={handleNoClick} className="h-10 border-2 border-red-600 border-solid w-32 font-medium text-red-600">
+              No
+            </button>
           </div>
         </div>
       </section>
