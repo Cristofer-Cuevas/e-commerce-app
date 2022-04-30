@@ -5,9 +5,6 @@ import closeIcon from "../styles/images/close_white_24dp.svg";
 const Cart = ({ setProductsInCart, productsInCart, user }) => {
   const modalRef = useRef();
   const inpuRef = useRef(0);
-
-  console.log(user);
-
   const handleAddClick = (e) => {
     const index = parseInt(e.target.dataset.index);
     const products = productsInCart.map((product) => {
