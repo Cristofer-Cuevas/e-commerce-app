@@ -39,7 +39,9 @@ function App() {
                 <Electronic setProductsInCart={setProductsInCart} />
               </Home>
             }
-          />
+          >
+            <Route path="cart" element={<Cart setProductsInCart={setProductsInCart} productsInCart={productsInCart} user={user} />} />
+          </Route>
           <Route
             path="/jewellery"
             element={
@@ -64,7 +66,6 @@ function App() {
               </Home>
             }
           />
-          <Route path="/cart" element={<Cart setProductsInCart={setProductsInCart} productsInCart={productsInCart} user={user} />} />
 
           <Route path="/account" element={<Account user={user} />} />
           <Route path="/signin" element={<SignIn setUser={setUser} user={user} />} />
