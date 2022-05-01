@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { postProductsToPurchase } from "../fetchMethods/post";
 import closeIcon from "../styles/images/close_white_24dp.svg";
 
@@ -78,9 +78,16 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
   };
   const handleNoClick = () => {};
 
+  useEffect(() => {
+    // Removes scroll bar when component mounts
+    document.body.style.position = "fixed";
+    // Puts scroll bar back in when component unmounts
+    return () => (document.body.style.position = "static");
+  }, []);
+
   return (
     <>
-      <section className="flex flex-col items-center">
+      <section className="flex flex-col items-center z-50 fixed top-0 bg-white w-full h-screen">
         <h2 className="text-2xl font-bold m-4">YOUR CART</h2>
         {productsInCart
           ? productsInCart.map((product) => {
