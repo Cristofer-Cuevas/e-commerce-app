@@ -4,7 +4,7 @@ import cartIcon from "../styles/images/shopping_cart_white_24dp.svg";
 import accountIcon from "../styles/images/account_circle_white_24dp.svg";
 import { UserContext } from "../App";
 
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 const Home = ({ children }) => {
   return (
@@ -12,7 +12,10 @@ const Home = ({ children }) => {
       <section className="bg-hero-image bg-cover bg-center h-5/6">
         <Header />
       </section>
-      <main className="">{children}</main>
+      <main className="">
+        {children}
+        <Outlet />
+      </main>
     </>
   );
 };
@@ -26,7 +29,7 @@ const Header = () => {
     <header className="w-11/12 mx-auto overflow">
       <h1 className="font-bold text-4xl text-center text-white pt-8 ">Shop</h1>
       <div className="flex justify-between mt-10">
-        <Link to="/cart" className="w-20 text-white">
+        <Link to="cart" className="w-20 text-white">
           <img className="inline-block" src={cartIcon} alt="Cart" /> CART
         </Link>
         <Link to="/account" className="w-26 text-white">
