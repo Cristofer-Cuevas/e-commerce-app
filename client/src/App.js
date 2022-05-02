@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect, createContext, useRef } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import SignIn from "./components/SignIn";
@@ -25,47 +25,11 @@ function App() {
     setProductsCount(productsInCart.length);
   }, [productsInCart]);
 
-  console.log(productsCount);
   return (
     <UserContext.Provider value={user}>
       <Router>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <Home setUser={setUser}>
-                <Fashion setProductsInCart={setProductsInCart} />
-                <Jewellery setProductsInCart={setProductsInCart} />
-                <Electronic setProductsInCart={setProductsInCart} />
-              </Home>
-            }
-          >
-            <Route path="cart" element={<Cart setProductsInCart={setProductsInCart} productsInCart={productsInCart} user={user} />} />
-          </Route>
-          <Route
-            path="/jewellery"
-            element={
-              <Home>
-                <Jewellery setProductsInCart={setProductsInCart} />
-              </Home>
-            }
-          />
-          <Route
-            path="/Fashion"
-            element={
-              <Home>
-                <Fashion setProductsInCart={setProductsInCart} />
-              </Home>
-            }
-          />
-          <Route
-            path="/electronic"
-            element={
-              <Home>
-                <Electronic setProductsInCart={setProductsInCart} />
-              </Home>
-            }
-          />
+          <Route path="/*" element={<Home setUser={setUser} setProductsInCart={setProductsInCart} />}></Route>
 
           <Route path="/account" element={<Account user={user} />} />
           <Route path="/signin" element={<SignIn setUser={setUser} user={user} />} />
