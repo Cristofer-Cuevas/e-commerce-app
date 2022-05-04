@@ -21,10 +21,10 @@ const Home = ({ children, setProductsInCart }) => {
         {children}
         <Outlet />
         <Routes>
-          <Route path="/" element={[<Fashion key={1} setProductsInCart={setProductsInCart} />, <Jewellery key={2} setProductsInCart={setProductsInCart} />, <Electronic key={3} setProductsInCart={setProductsInCart} />]} />
+          <Route path="/" element={[<Fashion key={1} setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />, <Jewellery key={2} setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />, <Electronic key={3} setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />]} />
           <Route path="/fashion" element={<Fashion inputSearchValue={inputSearchValue} setProductsInCart={setProductsInCart} />} />
-          <Route path="/jewellery" element={<Jewellery setProductsInCart={setProductsInCart} />} />
-          <Route path="/electronic" element={<Electronic setProductsInCart={setProductsInCart} />} />
+          <Route path="/jewellery" element={<Jewellery setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />} />
+          <Route path="/electronic" element={<Electronic setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />} />
         </Routes>
       </main>
     </>
