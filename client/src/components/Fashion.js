@@ -12,18 +12,11 @@ const Fashion = ({ setProductsInCart, inputSearchValue }) => {
     });
   }, []);
 
-  useEffect(() => {
-    if (inputSearchValue) {
-      setProducts(filterProducts.current.filter((product) => product.title.toLowerCase().includes(inputSearchValue.toLowerCase() || "*")));
-    } else {
-      setProducts(filterProducts.current);
-    }
-  }, [inputSearchValue]);
   return (
     <>
       <section className="w-full pb-20">
         <h1 className="font-bold text-3xl text-center">Man and Woman Fashion</h1>
-        <Products setProductsInCart={setProductsInCart} products={products} inputSearchValue={inputSearchValue} />
+        <Products setProductsInCart={setProductsInCart} products={products} setProducts={setProducts} inputSearchValue={inputSearchValue} filterProducts={filterProducts} />
       </section>
     </>
   );
