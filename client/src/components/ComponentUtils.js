@@ -70,10 +70,19 @@ export const NavBar = () => {
   );
 };
 
-export const Products = ({ products, setProductsInCart }) => {
+export const Products = ({ products, setProductsInCart, setProducts, filterProducts, inputSearchValue }) => {
   const num = useRef(0);
   const carouselRef = useRef(null);
   const numOfProducts = products.length;
+
+  console.log(inputSearchValue);
+
+  useEffect(() => {
+    console.log(filterProducts);
+    if (inputSearchValue) {
+      setProducts(filterProducts.current.filter((product) => product.title.toLowerCase().includes(inputSearchValue.toLowerCase() || "*")));
+    }
+  }, [inputSearchValue, filterProducts, setProducts]);
 
   const handleArrBackClick = () => {
     --num.current;
