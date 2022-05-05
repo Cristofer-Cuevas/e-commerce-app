@@ -24,7 +24,7 @@ export const LoginError = ({ text }) => {
 
 // input for searching products
 export const InputSearch = ({ inputRef, onInput }) => {
-  return <input className="px-4 z-0 w-full h-10 rounded-l " ref={inputRef} type="search" autoComplete="on" placeholder="Search for products" onInput={onInput} />;
+  return <input className="px-4 z-0 w-full h-10 rounded-l " ref={inputRef} type="text" autoComplete="on" placeholder="Search for products" onInput={onInput} />;
 };
 
 export const NavBar = () => {
