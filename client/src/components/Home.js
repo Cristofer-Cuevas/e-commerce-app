@@ -21,8 +21,6 @@ const Home = () => {
         <Header setInputSearchValue={setInputSearchValue} user={user} />
       </section>
       <main className="">
-        {/* {children} */}
-        {/* <Outlet /> */}
         <Routes>
           <Route path="/" element={[<Fashion key={1} setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />, <Jewellery key={2} setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />, <Electronic key={3} setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />]}></Route>
 
