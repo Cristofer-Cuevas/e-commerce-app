@@ -10,7 +10,7 @@ import Cart from "./Cart";
 
 import { Link, Routes, Route } from "react-router-dom";
 
-const Home = ({ children }) => {
+const Home = () => {
   const user = useContext(UserContext);
   const [productsInCart, setProductsInCart] = useState([]);
   const [inputSearchValue, setInputSearchValue] = useState(null);
