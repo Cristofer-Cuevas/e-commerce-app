@@ -8,7 +8,7 @@ import Electronic from "./Electronic";
 import Fashion from "./Fashion";
 import Cart from "./Cart";
 
-import { Link, Outlet, Routes, Route } from "react-router-dom";
+import { Link, Routes, Route } from "react-router-dom";
 
 const Home = ({ children }) => {
   const user = useContext(UserContext);
