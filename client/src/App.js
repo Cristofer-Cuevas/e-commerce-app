@@ -10,22 +10,16 @@ export const UserContext = createContext();
 
 function App() {
   const [user, setUser] = useState(null);
-  const [productsCount, setProductsCount] = useState(null);
-  const [productsInCart, setProductsInCart] = useState([]);
 
   useEffect(() => {
     getAuth().then((res) => setUser(res.user));
   }, []);
 
-  useEffect(() => {
-    setProductsCount(productsInCart.length);
-  }, [productsInCart]);
-
   return (
     <UserContext.Provider value={user}>
       <Router>
         <Routes>
-          <Route path="/*" element={<Home setUser={setUser} setProductsInCart={setProductsInCart} />}></Route>
+          <Route path="/*" element={<Home setUser={setUser} />}></Route>
 
           <Route path="/account" element={<Account user={user} />} />
           <Route path="/signin" element={<SignIn setUser={setUser} user={user} />} />
