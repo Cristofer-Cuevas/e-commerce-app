@@ -6,25 +6,30 @@ import { UserContext } from "../App";
 import Jewellery from "./Jewellery";
 import Electronic from "./Electronic";
 import Fashion from "./Fashion";
+import Cart from "./Cart";
 
 import { Link, Outlet, Routes, Route } from "react-router-dom";
 
-const Home = ({ children, setProductsInCart }) => {
+const Home = ({ children }) => {
+  const user = useContext(UserContext);
+  const [productsInCart, setProductsInCart] = useState([]);
   const [inputSearchValue, setInputSearchValue] = useState(null);
 
   return (
     <>
       <section className="bg-hero-image bg-cover bg-center h-5/6">
-        <Header setInputSearchValue={setInputSearchValue} />
+        <Header setInputSearchValue={setInputSearchValue} user={user} />
       </section>
       <main className="">
-        {children}
-        <Outlet />
+        {/* {children} */}
+        {/* <Outlet /> */}
         <Routes>
-          <Route path="/" element={[<Fashion key={1} setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />, <Jewellery key={2} setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />, <Electronic key={3} setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />]} />
-          <Route path="/fashion" element={<Fashion inputSearchValue={inputSearchValue} setProductsInCart={setProductsInCart} />} />
-          <Route path="/jewellery" element={<Jewellery setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />} />
-          <Route path="/electronic" element={<Electronic setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />} />
+          <Route path="/" element={[<Fashion key={1} setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />, <Jewellery key={2} setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />, <Electronic key={3} setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />]}></Route>
+
+          <Route path="fashion" element={<Fashion inputSearchValue={inputSearchValue} setProductsInCart={setProductsInCart} />} />
+          <Route path="jewellery" element={<Jewellery setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />} />
+          <Route path="electronic" element={<Electronic setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />} />
+          <Route path="cart" element={[<Fashion key={1} setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />, <Jewellery key={2} setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />, <Electronic key={3} setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />, <Cart setProductsInCart={setProductsInCart} productsInCart={productsInCart} user={user} />]}></Route>
         </Routes>
       </main>
     </>
@@ -32,8 +37,7 @@ const Home = ({ children, setProductsInCart }) => {
 };
 
 // Header
-const Header = ({ setInputSearchValue }) => {
-  const user = useContext(UserContext);
+const Header = ({ setInputSearchValue, user }) => {
   const inputRef = useRef(null);
 
   const handleOnInput = (e) => {
