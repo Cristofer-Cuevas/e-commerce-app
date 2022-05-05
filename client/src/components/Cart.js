@@ -87,7 +87,7 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
 
   return (
     <>
-      <section className="flex flex-col items-center z-50 fixed top-0 bg-white w-full h-screen">
+      <section className="flex flex-col items-center z-50 fixed top-0 bg-white w-full h-screen overflow-y-auto">
         <h2 className="text-2xl font-bold m-4">YOUR CART</h2>
         {productsInCart
           ? productsInCart.map((product) => {
