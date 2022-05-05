@@ -1,10 +1,14 @@
 import React, { useEffect, useRef } from "react";
 import { postProductsToPurchase } from "../fetchMethods/post";
 import closeIcon from "../styles/images/close_white_24dp.svg";
+import { useNavigate } from "react-router-dom";
 
 const Cart = ({ setProductsInCart, productsInCart, user }) => {
   const modalRef = useRef();
   const inpuRef = useRef(0);
+
+  const navigate = useNavigate();
+
   const handleAddClick = (e) => {
     const index = parseInt(e.target.dataset.index);
     const products = productsInCart.map((product) => {
@@ -85,10 +89,17 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
     return () => (document.body.style.position = "static");
   }, []);
 
+  const handleCloseCart = () => {
+    navigate("/");
+  };
+
   return (
     <>
       <section className="flex flex-col items-center z-50 fixed top-0 bg-white w-full h-screen overflow-y-auto">
-        <h2 className="text-2xl font-bold m-4">YOUR CART</h2>
+        <div className="flex items-center mt-0 h-16  w-full bg-sky-700 bg-orange-500">
+          <img className="ml-4" src={closeIcon} onClick={handleCloseCart} alt="Close" />
+          <h2 className="text-2xl font-bold text-center w-11/12 text-white">YOUR CART</h2>
+        </div>
         {productsInCart
           ? productsInCart.map((product) => {
               return (
