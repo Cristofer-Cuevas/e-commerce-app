@@ -84,13 +84,20 @@ export const Products = ({ products, setProductsInCart, setProducts, filterProdu
     }
   }, [inputSearchValue, filterProducts, setProducts]);
 
+  // This func prevents a console error when trying to assign the property transform when there is still no element on the DOM.
+  const assingTransformProperty = (element) => {
+    if (element.current) {
+      carouselRef.current.style.transform = `translateX(-${num.current}00%)`;
+    }
+  };
+
   const handleArrBackClick = () => {
     --num.current;
 
     if (num.current <= -1) {
       num.current = numOfProducts - 1;
     }
-    carouselRef.current.style.transform = `translateX(-${num.current}00%)`;
+    assingTransformProperty(carouselRef);
   };
 
   useEffect(() => {
@@ -99,7 +106,7 @@ export const Products = ({ products, setProductsInCart, setProducts, filterProdu
       if (num.current >= numOfProducts) {
         num.current = 0;
       }
-      carouselRef.current.style.transform = `translateX(-${num.current}00%)`;
+      assingTransformProperty(carouselRef);
     }, 5000);
 
     return () => clearInterval(interval);
@@ -110,8 +117,7 @@ export const Products = ({ products, setProductsInCart, setProducts, filterProdu
     if (num.current >= numOfProducts) {
       num.current = 0;
     }
-    console.log(num);
-    carouselRef.current.style.transform = `translateX(-${num.current}00%)`;
+    assingTransformProperty(carouselRef);
   };
 
   const handleBuyNowClick = (e) => {
