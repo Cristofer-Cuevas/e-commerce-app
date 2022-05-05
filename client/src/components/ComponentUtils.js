@@ -127,7 +127,9 @@ export const Products = ({ products, setProductsInCart, setProducts, filterProdu
 
   return (
     <>
-      {products.length > 0 ? (
+      {!products ? (
+        <Loading />
+      ) : products.length > 0 ? (
         <div className=" w-11/12 shadow-6xl mx-auto m-10 relative h-boxCont overflow-hidden">
           <div ref={carouselRef} className="transition duration-700 ease-out flex flex-col items-center h-prodCont mx-auto mt-10  flex-wrap w-full ">
             {products.map((product) => {
@@ -151,7 +153,7 @@ export const Products = ({ products, setProductsInCart, setProducts, filterProdu
           </div>
         </div>
       ) : (
-        <Loading />
+        <p className="text-center mt-10">No product could be found</p>
       )}
     </>
   );
