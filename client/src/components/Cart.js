@@ -95,8 +95,8 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
 
   return (
     <>
-      <section className="flex flex-col items-center z-50 fixed top-0 bg-white w-full h-screen overflow-y-auto">
-        <div className="flex items-center mt-0 h-16  w-full bg-sky-700 bg-orange-500">
+      <section className="flex flex-col items-center z-50 fixed top-0 w-full h-screen overflow-y-auto bg-white">
+        <div className="flex py-4 w-full bg-sky-700 bg-orange-500">
           <img className="ml-4" src={closeIcon} onClick={handleCloseCart} alt="Close" />
           <h2 className="text-2xl font-bold text-center w-11/12 text-white">YOUR CART</h2>
         </div>
@@ -104,12 +104,12 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
           ? productsInCart.map((product) => {
               return (
                 <div key={product.id} data-index={product.id} className="flex w-4/5 mt-12 border-b border-gray-400 border-solid pb-4">
-                  <div className="w-1/2">
-                    <img className="" src={product.image} alt="product" />
+                  <div className="w-12">
+                    <img src={product.image} alt="product" />
                   </div>
                   <div className="ml-10">
-                    <div className="">
-                      <h3 className="font-medium  text-sm">{product.title}</h3>
+                    <div className="w-56">
+                      <h3 className="font-medium text-sm">{product.title}</h3>
                       <div className="flex  items-center my-4 border border-black border-solid w-fit py-1 px-2">
                         <button data-index={product.id} onClick={handleSubtractClick} className="mr-4 w-4">
                           -
