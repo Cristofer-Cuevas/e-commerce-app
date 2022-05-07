@@ -67,18 +67,22 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
   };
 
   const handleYesClick = () => {
-    postProductsToPurchase(
-      productsInCart.map((product) => {
-        return { id: product.id, quantity: product.quantity, price: product.price };
-      })
-    ).then((res) => {
-      if (res.success) {
-        console.log(user);
-        user.credit = res.credit;
-        setProductsInCart([]);
-      }
-      console.log(res);
-    });
+    if (!user) {
+      navigate("/signin ");
+    } else {
+      postProductsToPurchase(
+        productsInCart.map((product) => {
+          return { id: product.id, quantity: product.quantity, price: product.price };
+        })
+      ).then((res) => {
+        if (res.success) {
+          console.log(user);
+          user.credit = res.credit;
+          setProductsInCart([]);
+        }
+        console.log(res);
+      });
+    }
   };
   const handleNoClick = () => {};
 
@@ -147,7 +151,7 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
           </div>
           {totalCost}
           <p className="my-10 px-4 text-center">
-            Your credit will be: <span className="text-green-600 font-medium">{user?.credit - totalPrice} </span> after the purchase.<span className="text-red-600"> Do you want to continue? </span>
+            Your credit will be: <span className="text-green-600 font-medium">{user?.credit - totalPrice || 0} </span> after the purchase.<span className="text-red-600"> Do you want to continue? </span>
           </p>
           <div className="flex justify-around my-6">
             <button onClick={handleYesClick} className="h-10 bg-red-600 w-32 text-white font-medium">
