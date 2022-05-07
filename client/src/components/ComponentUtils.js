@@ -74,6 +74,8 @@ export const Products = ({ products, setProductsInCart, setProducts, filterProdu
   const num = useRef(0);
   const carouselRef = useRef(null);
   const numOfProducts = products.length;
+  // This array is for saving the id of products that are already in the cart to not add it twice
+  const idOfProductsClicked = useRef([0]);
 
   console.log(inputSearchValue);
 
@@ -125,10 +127,13 @@ export const Products = ({ products, setProductsInCart, setProducts, filterProdu
 
     const clickedProduct = products.filter((product) => product.id === clickedProductId);
 
-    clickedProduct[0].quantity = 1;
-    console.log(clickedProduct);
-
-    setProductsInCart((products) => [...products, ...clickedProduct]);
+    if (idOfProductsClicked.current.every((productId) => productId !== clickedProduct[0].id)) {
+      idOfProductsClicked.current.push(clickedProductId);
+      clickedProduct[0].quantity = 1;
+      if (clickedProduct[0]) {
+        setProductsInCart((products) => [...products, ...clickedProduct]);
+      }
+    }
   };
 
   return (
