@@ -27,7 +27,7 @@ const Home = () => {
           <Route path="fashion" element={<Fashion inputSearchValue={inputSearchValue} setProductsInCart={setProductsInCart} />} />
           <Route path="jewellery" element={<Jewellery setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />} />
           <Route path="electronic" element={<Electronic setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />} />
-          <Route path="cart" element={[<Fashion key={1} setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />, <Jewellery key={2} setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />, <Electronic key={3} setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />, <Cart setProductsInCart={setProductsInCart} productsInCart={productsInCart} user={user} />]}></Route>
+          <Route path="cart" element={[<Fashion key={1} setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />, <Jewellery key={2} setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />, <Electronic key={3} setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />, <Cart key={4} setProductsInCart={setProductsInCart} productsInCart={productsInCart} user={user} />]}></Route>
         </Routes>
       </main>
     </>
