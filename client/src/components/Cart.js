@@ -72,7 +72,7 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
     } else {
       postProductsToPurchase(
         productsInCart.map((product) => {
-          return { id: product.id, quantity: product.quantity, price: product.price };
+          return { id: product.id, quantity: product.quantity, price: product.price, image: product.image };
         })
       ).then((res) => {
         if (res.success) {
