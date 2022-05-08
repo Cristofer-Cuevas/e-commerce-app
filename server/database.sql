@@ -11,6 +11,7 @@ CREATE TABLE purchased_products (
 	product_id int, 
 	price numeric,
 	quantity int,
+	image text,
 	date text
 );
 
