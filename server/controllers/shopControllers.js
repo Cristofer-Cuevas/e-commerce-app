@@ -101,7 +101,7 @@ shopControllers.postPurchaseProducts = async (req, res) => {
       } else if (posOrNeg === 1) {
         const { rows: newCredit } = await pool.query("UPDATE credits SET credit = credit - $1 WHERE user_id = $2 RETURNING credit", [totalPrice, user.id]);
         for (let product of products) {
-          await pool.query("INSERT INTO purchased_products VALUES ($1, $2, $3, $4, $5)", [user.id, product.id, product.price, product.quantity, formattedDate]);
+          await pool.query("INSERT INTO purchased_products VALUES ($1, $2, $3, $4, $5, $6)", [user.id, product.id, product.price, product.quantity, product.image, formattedDate]);
         }
         res.json({ success: true, credit: newCredit[0].credit });
       }
