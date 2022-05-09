@@ -100,7 +100,7 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
   return (
     <>
       <section className="flex flex-col items-center z-50 fixed top-0 w-full h-screen overflow-y-auto bg-white">
-        <div className="flex py-4 w-full bg-sky-700 bg-orange-500">
+        <div className="flex py-4 w-full bg-orange-500">
           <img className="ml-4" src={closeIcon} onClick={handleCloseCart} alt="Close" />
           <h2 className="text-2xl font-bold text-center w-11/12 text-white">YOUR CART</h2>
         </div>
