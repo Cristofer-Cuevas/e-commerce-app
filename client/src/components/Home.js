@@ -49,7 +49,7 @@ const Header = ({ setInputSearchValue, user }) => {
         <Link to="cart" className="w-20 text-white">
           <img className="inline-block" src={cartIcon} alt="Cart" /> CART
         </Link>
-        <Link to="/account" className="w-26 text-white">
+        <Link to="/account" className="w-26 text-white capitalize">
           <img className="inline-block" src={accountIcon} alt="User" /> {user?.name || "Account"}
         </Link>
       </div>
