@@ -25,7 +25,7 @@ const Account = ({ user }) => {
   return (
     <>
       {!user ? (
-        <Navigate to="/signin" replace />
+        <Navigate to="/" replace />
       ) : (
         <section className="bg-gray-200 h-screen">
           <section>
