@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { NavBar } from "./ComponentUtils";
-import { Navigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { getUserProducts } from "../fetchMethods/get";
 import closeIcon from "../styles/images/close_white_24dp.svg";
 import { Loading } from "./ComponentUtils";
 
 const Account = ({ user }) => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState(null);
 
   useEffect(() => {
@@ -17,6 +18,10 @@ const Account = ({ user }) => {
     }
   }, [user]);
 
+  const handleCloseClick = () => {
+    navigate("/");
+  };
+
   return (
     <>
       {!user ? (
@@ -27,7 +32,7 @@ const Account = ({ user }) => {
             <header className="flex justify-between items-center px-6 py-4 bg-orange-500">
               <NavBar />
               <div>
-                <img className="w-8" src={closeIcon} alt="user" />
+                <img className="w-8" onClick={handleCloseClick} src={closeIcon} alt="user" />
               </div>
             </header>
           </section>
