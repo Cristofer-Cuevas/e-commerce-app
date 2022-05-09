@@ -117,7 +117,7 @@ shopControllers.getPurchasedProducts = async (req, res) => {
   const { user } = await getAuthUser(req);
   console.log(user);
 
-  const { rows: products } = await pool.query("SELECT * FROM purchased_products WHERE user_id = $1", [user.id]);
+  const { rows: products } = await pool.query("SELECT * FROM purchased_products WHERE user_id = $1 ORDER BY date DESC", [user.id]);
 
   console.log(products);
   if (products[0]) {
