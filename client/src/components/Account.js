@@ -27,7 +27,7 @@ const Account = ({ user }) => {
       {!user ? (
         <Navigate to="/" replace />
       ) : (
-        <section className="bg-gray-200 h-screen">
+        <section className="bg-gray-200 h-screen overflow-y-auto pb-10">
           <section>
             <header className="flex justify-between items-center px-6 py-4 bg-orange-500">
               <NavBar />
@@ -43,7 +43,7 @@ const Account = ({ user }) => {
                 ({user.name} {user.last_name})
               </p>
             </div>
-            <section className="">
+            <section className="md:w-11/12 mx-auto">
               {products ? (
                 <table className="w-full text-center mt-12 ">
                   <thead className="bg-sky-700 text-white text-xs font-thin h-20">
