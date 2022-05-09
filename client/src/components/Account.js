@@ -45,7 +45,7 @@ const Account = ({ user }) => {
             </div>
             <section className="md:w-11/12 mx-auto">
               {products ? (
-                <table className="w-full text-center mt-12 ">
+                <table className="w-full text-center mt-12">
                   <thead className="bg-sky-700 text-white text-xs font-thin h-20">
                     <tr className="font-thin">
                       <th className="font-thin">Product</th>
