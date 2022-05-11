@@ -42,24 +42,6 @@ shopControllers.getElectronics = async (req, res) => {
   res.json({ electronics: response });
 };
 
-shopControllers.getUserPurchasedProducts = async (req, res) => {
-  const { success, user, unauthorized } = await getAuthUser(req);
-
-  if (success) {
-    const { rows: purchasedProducts } = await pool.query("SELECT product_id, price, quantity, date FROM purchased_products where id = $1", [user.id]);
-    let products = [];
-    for (let product of purchasedProducts) {
-      const response = await fetch(`https://fakestoreapi.com/products/${product.id}`);
-
-      const productsJson = await response.json();
-      products.push({ products: productsJson, price: product.price, quantity: product.quantity, date: product.date });
-    }
-    res.json({ success, products });
-  } else {
-    res.json({ success, unauthorized });
-  }
-};
-
 //  Get products saved in cart_products
 shopControllers.getUserCartProducts = async (req, res) => {
   const { success, user, unauthorized } = await getAuthUser(req);
@@ -119,7 +101,6 @@ shopControllers.getPurchasedProducts = async (req, res) => {
 
   const { rows: products } = await pool.query("SELECT * FROM purchased_products WHERE user_id = $1 ORDER BY date DESC", [user.id]);
 
-  console.log(products);
   if (products[0]) {
     res.json({ success: true, products: products });
   } else {
