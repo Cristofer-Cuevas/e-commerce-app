@@ -12,7 +12,14 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    getAuth().then((res) => setUser(res.user));
+    getAuth().then((res) => {
+      if (res.success) {
+        setUser(res.user);
+      } else if (res.unauthorized) {
+        console.log("unauthorized");
+        setUser(false);
+      }
+    });
   }, []);
 
   return (
