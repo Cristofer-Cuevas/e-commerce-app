@@ -22,10 +22,16 @@ const Account = ({ user }) => {
     navigate("/");
   };
 
+  useEffect(() => {
+    if (user === false) {
+      navigate("/signin");
+    }
+  }, [user, navigate]);
+
   return (
     <>
       {!user ? (
-        <Navigate to="/" replace />
+        <Loading />
       ) : (
         <section className="bg-gray-200 h-screen overflow-y-auto pb-10">
           <section>
