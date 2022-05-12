@@ -84,7 +84,10 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
       });
     }
   };
-  const handleNoClick = () => {};
+  const handleNoClick = () => {
+    modalRef.current.classList.remove("visible");
+    modalRef.current.classList.add("invisible");
+  };
 
   useEffect(() => {
     // Removes scroll bar when component mounts
