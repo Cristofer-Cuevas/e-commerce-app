@@ -147,7 +147,7 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
             PROCEED TO BUY
           </button>
         </div>
-        <div ref={modalRef} className="invisible shadow-6xl fixed w-11/12 bg-white top-1/4 rounded	">
+        <div ref={modalRef} className="invisible shadow-6xl fixed w-11/12 bg-white top-1/4 rounded">
           <div className="flex justify-between items-center px-4 bg-red-500 text-white h-14 rounded-t">
             <h3>Confirm purchase</h3>
             <img className="w-6" onClick={handleCloseModal} data-modal="hide" src={closeIcon} alt="Close" />
