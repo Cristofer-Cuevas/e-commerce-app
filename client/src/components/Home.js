@@ -92,7 +92,7 @@ const AddedToCartModal = ({ productsInCart }) => {
               <img className="w-24 h-24" src={productAddedToCart?.image} alt="product" />
               <div className="pl-8">
                 <p>{productAddedToCart?.title}</p>
-                <p className="mt-4 text-green-600">{productAddedToCart?.price}</p>
+                <p className="mt-4 text-green-600">$ {productAddedToCart?.price}</p>
               </div>
             </div>
 
