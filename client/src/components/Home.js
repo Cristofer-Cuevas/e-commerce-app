@@ -80,6 +80,7 @@ const AddedToCartModal = ({ productsInCart }) => {
 
   const handleViewClick = () => {
     navigate("/cart");
+    setProductAddedToCart(null);
   };
 
   return (
