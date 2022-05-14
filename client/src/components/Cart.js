@@ -175,15 +175,15 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
 
 const SuccessModal = () => {
   return (
-    <div>
-      <div>
-        <img src={closeIcon} alt="Close" />
-        <img src={checkedIcon} alt="Checked" />
+    <div className="w-11/12 fixed top-24 shadow-2xl">
+      <div className="bg-green-500 w-full h-40">
+        <img className="absolute right-6 top-2" src={closeIcon} alt="Close" />
+        <img className="mx-auto pt-8 w-24" src={checkedIcon} alt="Checked" />
       </div>
-      <div>
-        <h3>Great!</h3>
-        <p>Your purchase has been successful</p>
-        <button>OK!</button>
+      <div className="bg-white text-center pb-6">
+        <h3 className="text-4xl pt-10 text-gray-500">Great!</h3>
+        <p className="pt-6">Your purchase has been successful!</p>
+        <button className="bg-orange-400 px-16 py-2 text-white rounded mt-6">OK!</button>
       </div>
     </div>
   );
