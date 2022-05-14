@@ -40,6 +40,9 @@ module.exports = {
           1: "1s",
         },
       },
+      colors: {
+        opact: "#00000080",
+      },
     },
   },
   plugins: [],
