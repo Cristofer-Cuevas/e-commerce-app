@@ -9,6 +9,11 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
 
   const navigate = useNavigate();
 
+  const closeModal = () => {
+    modalRef.current.classList.remove("visible");
+    modalRef.current.classList.add("invisible");
+  };
+
   const handleAddClick = (e) => {
     const index = parseInt(e.target.dataset.index);
     const products = productsInCart.map((product) => {
@@ -61,8 +66,7 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
       modalRef.current.classList.remove("invisible");
       modalRef.current.classList.add("visible");
     } else if (showOrHideModal === "hide") {
-      modalRef.current.classList.remove("visible");
-      modalRef.current.classList.add("invisible");
+      closeModal();
     }
   };
 
@@ -79,14 +83,14 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
           console.log(user);
           user.credit = res.credit;
           setProductsInCart([]);
+          closeModal();
         }
         console.log(res);
       });
     }
   };
   const handleNoClick = () => {
-    modalRef.current.classList.remove("visible");
-    modalRef.current.classList.add("invisible");
+    closeModal();
   };
 
   useEffect(() => {
@@ -160,7 +164,7 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
             <button onClick={handleYesClick} className="h-10 bg-red-600 w-32 text-white font-medium">
               Yes!
             </button>
-            <button onClick={handleNoClick} className="h-10 border-2 border-red-600 border-solid w-32 font-medium text-red-600">
+            <button onClick={() => closeModal()} className="h-10 border-2 border-red-600 border-solid w-32 font-medium text-red-600">
               No
             </button>
           </div>
