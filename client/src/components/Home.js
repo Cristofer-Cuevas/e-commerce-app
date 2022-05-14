@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useState } from "react";
+import React, { useRef, useContext, useState, useEffect } from "react";
 import { InputSearch, NavBar } from "./ComponentUtils";
 import cartIcon from "../styles/images/shopping_cart_white_24dp.svg";
 import accountIcon from "../styles/images/account_circle_white_24dp.svg";
@@ -8,7 +8,7 @@ import Electronic from "./Electronic";
 import Fashion from "./Fashion";
 import Cart from "./Cart";
 
-import { Link, Routes, Route } from "react-router-dom";
+import { Link, Routes, Route, useNavigate } from "react-router-dom";
 
 const Home = () => {
   const user = useContext(UserContext);
@@ -29,6 +29,7 @@ const Home = () => {
           <Route path="electronic" element={<Electronic setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />} />
           <Route path="cart" element={[<Fashion key={1} setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />, <Jewellery key={2} setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />, <Electronic key={3} setProductsInCart={setProductsInCart} inputSearchValue={inputSearchValue} />, <Cart key={4} setProductsInCart={setProductsInCart} productsInCart={productsInCart} user={user} />]}></Route>
         </Routes>
+        <AddedToCartModal productsInCart={productsInCart} />
       </main>
     </>
   );
@@ -61,6 +62,52 @@ const Header = ({ setInputSearchValue, user }) => {
         </div>
       </div>
     </header>
+  );
+};
+
+const AddedToCartModal = ({ productsInCart }) => {
+  const [productAddedToCart, setProductAddedToCart] = useState(null);
+
+  useEffect(() => {
+    setProductAddedToCart(productsInCart[productsInCart.length - 1]);
+  }, [productsInCart]);
+
+  const navigate = useNavigate();
+
+  const handleContinueClick = () => {
+    setProductAddedToCart(null);
+  };
+
+  const handleViewClick = () => {
+    navigate("/cart");
+  };
+
+  return (
+    <>
+      {productAddedToCart ? (
+        <div className="flex jutify-center top-0 fixed w-full h-screen bg-opact">
+          <div className="w-11/12 h-96 rounded mx-auto mt-12 p-4 bg-white">
+            <p>Product added to cart</p>
+            <div className="flex w-full mx-auto my-12">
+              <img className="w-24 h-24" src={productAddedToCart?.image} alt="product" />
+              <div className="pl-8">
+                <p>{productAddedToCart?.title}</p>
+                <p className="mt-4 text-green-600">{productAddedToCart?.price}</p>
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center w-full text-white">
+              <button className="py-4 w-full bg-sky-700 mb-0.5 rounded" onClick={handleContinueClick}>
+                Continue shopping
+              </button>
+              <button className="py-4 w-full bg-sky-700 rounded" onClick={handleViewClick}>
+                View Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+    </>
   );
 };
 
