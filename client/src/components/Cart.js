@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { postProductsToPurchase } from "../fetchMethods/post";
 import closeIcon from "../styles/images/close_white_24dp.svg";
 import { useNavigate } from "react-router-dom";
+import checkedIcon from "../styles/images/task_alt_FILL0_wght400_GRAD0_opsz48.svg";
 
 const Cart = ({ setProductsInCart, productsInCart, user }) => {
   const modalRef = useRef();
@@ -166,8 +167,25 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
             </button>
           </div>
         </div>
+        {<SuccessModal />}
       </section>
     </>
+  );
+};
+
+const SuccessModal = () => {
+  return (
+    <div>
+      <div>
+        <img src={closeIcon} alt="Close" />
+        <img src={checkedIcon} alt="Checked" />
+      </div>
+      <div>
+        <h3>Great!</h3>
+        <p>Your purchase has been successful</p>
+        <button>OK!</button>
+      </div>
+    </div>
   );
 };
 
