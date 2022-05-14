@@ -74,6 +74,7 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
     if (!user) {
       navigate("/signin ");
     } else {
+      closeModal();
       postProductsToPurchase(
         productsInCart.map((product) => {
           return { id: product.id, quantity: product.quantity, price: product.price, image: product.image };
@@ -83,14 +84,10 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
           console.log(user);
           user.credit = res.credit;
           setProductsInCart([]);
-          closeModal();
         }
         console.log(res);
       });
     }
-  };
-  const handleNoClick = () => {
-    closeModal();
   };
 
   useEffect(() => {
