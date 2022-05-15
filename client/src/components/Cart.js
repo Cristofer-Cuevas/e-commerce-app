@@ -169,7 +169,6 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
           </div>
         </div>
         {modal ? <SuccessModal setModal={setModal} /> : null}
-        <SuccessModal />
       </section>
     </>
   );
@@ -179,18 +178,18 @@ const SuccessModal = ({ setModal }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-11/12 fixed top-24 shadow-2xl">
+    <div className="w-11/12 fixed top-20 shadow-2xl">
       <div className="bg-green-500 w-full h-40">
-        <img className="absolute right-6 top-2" onClick={() => setModal(false)} src={closeIcon} alt="Close" />
+        <img className="absolute right-4 top-4" onClick={() => setModal(false)} src={closeIcon} alt="Close" />
         <img className="mx-auto pt-8 w-24" src={checkedIcon} alt="Checked" />
       </div>
       <div className="bg-white text-center pb-6">
         <h3 className="text-4xl pt-10 text-gray-500">Great!</h3>
-        <p className="pt-6">Your purchase has been successful!</p>
-        <button className="bg-orange-400 px-16 py-2 text-white rounded mt-6 mr-2" onClick={() => setModal(false)}>
+        <p className="mt-6 mb-4">Your purchase has been successful!</p>
+        <button className="bg-orange-400 px-16 py-2 text-white rounded mt-2 mr-2 ml-4" onClick={() => setModal(false)}>
           OK!
         </button>
-        <button className="bg-orange-400 px-14 py-2 text-white rounded mt-6" onClick={() => navigate("/account")}>
+        <button className="bg-orange-400 px-14 py-2 text-white rounded mt-2 mr-2" onClick={() => navigate("/account")}>
           Go to history
         </button>
       </div>
