@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavBar } from "./ComponentUtils";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getUserProducts } from "../fetchMethods/get";
 import closeIcon from "../styles/images/close_white_24dp.svg";
 import { Loading } from "./ComponentUtils";
