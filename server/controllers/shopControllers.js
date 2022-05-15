@@ -83,7 +83,7 @@ shopControllers.postPurchaseProducts = async (req, res) => {
       } else if (posOrNeg === 1) {
         const { rows: newCredit } = await pool.query("UPDATE credits SET credit = credit - $1 WHERE user_id = $2 RETURNING credit", [totalPrice, user.id]);
         for (let product of products) {
-          await pool.query("INSERT INTO purchased_products VALUES ($1, $2, $3, $4, $5, $6)", [user.id, product.id, product.price, product.quantity, product.image, formattedDate]);
+          await pool.query("INSERT INTO purchased_products VALUES (DEFAULT, $1, $2, $3, $4, $5, $6)", [user.id, product.id, product.price, product.quantity, product.image, formattedDate]);
         }
         res.json({ success: true, credit: newCredit[0].credit });
       }
@@ -99,7 +99,7 @@ shopControllers.getPurchasedProducts = async (req, res) => {
   const { user } = await getAuthUser(req);
   console.log(user);
 
-  const { rows: products } = await pool.query("SELECT * FROM purchased_products WHERE user_id = $1 ORDER BY date DESC", [user.id]);
+  const { rows: products } = await pool.query("SELECT * FROM purchased_products WHERE user_id = $1 ORDER BY id DESC", [user.id]);
 
   if (products[0]) {
     res.json({ success: true, products: products });
