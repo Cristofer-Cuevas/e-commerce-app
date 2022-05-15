@@ -74,6 +74,8 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
   const handleYesClick = () => {
     if (!user) {
       navigate("/signin ");
+    } else if (productsInCart.length <= 0) {
+      closeModal();
     } else {
       closeModal();
       postProductsToPurchase(
