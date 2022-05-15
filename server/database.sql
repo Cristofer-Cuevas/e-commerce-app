@@ -7,6 +7,7 @@ CREATE TABLE cart_products (
 );
 
 CREATE TABLE purchased_products (
+	id SERIAL PRIMARY KEY,
 	user_id uuid NOT NULL, 
 	product_id int, 
 	price numeric,
