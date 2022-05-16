@@ -64,8 +64,10 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
   const handleCloseModal = (e) => {
     const showOrHideModal = e.target.dataset.modal;
     if (showOrHideModal === "show") {
-      modalRef.current.classList.remove("invisible");
-      modalRef.current.classList.add("visible");
+      if (productsInCart.length > 0) {
+        modalRef.current.classList.remove("invisible");
+        modalRef.current.classList.add("visible");
+      }
     } else if (showOrHideModal === "hide") {
       closeModal();
     }
