@@ -103,6 +103,10 @@ export const Products = ({ products, setProductsInCart, setProducts, filterProdu
   };
 
   useEffect(() => {
+    if (carouselRef.current) {
+      carouselRef.current.style.width = 100 / numOfProducts + "%";
+    }
+
     const interval = setInterval(() => {
       ++num.current;
       if (num.current >= numOfProducts) {
@@ -142,10 +146,10 @@ export const Products = ({ products, setProductsInCart, setProducts, filterProdu
         <Loading />
       ) : products.length > 0 ? (
         <div className=" w-11/12 shadow-6xl mx-auto m-10 relative h-boxCont overflow-hidden">
-          <div ref={carouselRef} className="transition duration-700 ease-out flex flex-col items-center h-prodCont mx-auto mt-10  flex-wrap w-full ">
+          <div ref={carouselRef} className="transition duration-700 ease-out flex flex-col  h-prodCont mt-10  flex-wrap bg-red-400 ">
             {products.map((product) => {
               return (
-                <div key={product.id} className="w-full  h-prodCont">
+                <div key={product.id} className="w-full h-prodCont">
                   <p className="font-semibold text-center px-6">{product.title}</p>
                   <p className="my-6 text-center">
                     <span className="text-orange-500 ">Price</span> $ {product.price}
