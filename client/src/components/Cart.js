@@ -48,10 +48,6 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
     setProductsInCart((products) => products.filter((product) => product.id !== clickedElement));
   };
 
-  const handleInpChange = (e) => {
-    console.log(e.target.value);
-  };
-
   const totalPrice = productsInCart.reduce((previousValue, currentValue) => (previousValue += currentValue.price), 0);
 
   const totalCost = (
@@ -128,7 +124,7 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
                         <button data-index={product.id} onClick={handleSubtractClick} className="mr-4 w-4">
                           -
                         </button>
-                        <input className="w-6 text-center" type="number" onChange={handleInpChange} ref={inpuRef} value={product.quantity} readOnly />
+                        <input className="w-6 text-center" type="number" ref={inpuRef} value={product.quantity} readOnly />
                         <button data-index={product.id} onClick={handleAddClick} className="ml-4">
                           +
                         </button>
