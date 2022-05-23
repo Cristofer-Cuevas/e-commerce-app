@@ -73,16 +73,27 @@ export const NavBar = () => {
 export const Products = ({ products, setProductsInCart, setProducts, filterProducts, inputSearchValue }) => {
   const num = useRef(0);
   const carouselRef = useRef(null);
-  // Media query, this shows the num of products based on x width
-  const numOfProducts = window.innerWidth >= 700 ? Math.floor(products.length / 2) : products.length;
-  console.log(numOfProducts);
+  const numOfProducts = useRef(0);
   // This array is for saving the id of products that are already in the cart to not add it twice
   const idOfProductsClicked = useRef([0]);
 
+  // Media query, this shows the num of products based on x width
+  useEffect(() => {
+    if (products?.length === 1) {
+      numOfProducts.current = 1;
+    } else if (products?.length === 2) {
+      numOfProducts.current = 1;
+    } else if (window.innerWidth >= 700) {
+      numOfProducts.current = Math.floor(products.length / 2);
+    } else if (window.innerWidth >= 375) {
+      numOfProducts.current = products?.length;
+    }
+  }, [numOfProducts, products]);
+
   useEffect(() => {
     console.log(filterProducts);
-    if (inputSearchValue) {
-      setProducts(filterProducts.current.filter((product) => product.title.toLowerCase().includes(inputSearchValue.toLowerCase() || "*")));
+    if (filterProducts?.current?.length > 0) {
+      setProducts(filterProducts.current.filter((product) => product.title.toLowerCase().includes(inputSearchValue?.toLowerCase() || "")));
     }
   }, [inputSearchValue, filterProducts, setProducts]);
 
@@ -90,7 +101,7 @@ export const Products = ({ products, setProductsInCart, setProducts, filterProdu
   const assingTransformProperty = useCallback(
     (element) => {
       if (element.current) {
-        carouselRef.current.style.transform = `translateX(-${parseInt(num.current + "00") / numOfProducts}%)`;
+        carouselRef.current.style.transform = `translateX(-${parseInt(num.current + "00") / numOfProducts.current}%)`;
       }
     },
     [numOfProducts]
@@ -100,20 +111,20 @@ export const Products = ({ products, setProductsInCart, setProducts, filterProdu
     --num.current;
 
     if (num.current <= -1) {
-      num.current = numOfProducts - 1;
+      num.current = numOfProducts.current - 1;
     }
     assingTransformProperty(carouselRef);
   };
 
   useEffect(() => {
-    if (products) {
+    if (products?.length > 0) {
       Array.from(carouselRef?.current?.children).forEach((productInDOM) => {
         productInDOM.style.width = productInDOM.style.width = 100 / numOfProducts + "%";
       });
     }
 
     if (carouselRef.current) {
-      carouselRef.current.style.width = numOfProducts + "00%";
+      carouselRef.current.style.width = numOfProducts.current + "00%";
     }
   }, [products, numOfProducts]);
 
@@ -122,7 +133,7 @@ export const Products = ({ products, setProductsInCart, setProducts, filterProdu
 
     const interval = setInterval(() => {
       ++num.current;
-      if (num.current === numOfProducts) {
+      if (num.current >= numOfProducts.current) {
         num.current = 0;
       }
       assingTransformProperty(carouselRef);
@@ -133,7 +144,7 @@ export const Products = ({ products, setProductsInCart, setProducts, filterProdu
 
   const handleArrForwardClick = () => {
     ++num.current;
-    if (num.current >= numOfProducts) {
+    if (num.current >= numOfProducts.current) {
       num.current = 0;
     }
     assingTransformProperty(carouselRef);
