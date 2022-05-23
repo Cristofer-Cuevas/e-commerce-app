@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import menuIcon from "../styles/images/menu_white_24dp.svg";
 import closeIcon from "../styles/images/close_white_24dp.svg";
@@ -73,11 +73,11 @@ export const NavBar = () => {
 export const Products = ({ products, setProductsInCart, setProducts, filterProducts, inputSearchValue }) => {
   const num = useRef(0);
   const carouselRef = useRef(null);
-  const numOfProducts = products.length;
+  // Media query, this shows the num of products based on x width
+  const numOfProducts = window.innerWidth >= 700 ? Math.floor(products.length / 2) : products.length;
+  console.log(numOfProducts);
   // This array is for saving the id of products that are already in the cart to not add it twice
   const idOfProductsClicked = useRef([0]);
-
-  console.log(inputSearchValue);
 
   useEffect(() => {
     console.log(filterProducts);
@@ -87,11 +87,14 @@ export const Products = ({ products, setProductsInCart, setProducts, filterProdu
   }, [inputSearchValue, filterProducts, setProducts]);
 
   // This func prevents a console error when trying to assign the property transform when there is still no element on the DOM.
-  const assingTransformProperty = (element) => {
-    if (element.current) {
-      carouselRef.current.style.transform = `translateX(-${num.current}00%)`;
-    }
-  };
+  const assingTransformProperty = useCallback(
+    (element) => {
+      if (element.current) {
+        carouselRef.current.style.transform = `translateX(-${parseInt(num.current + "00") / numOfProducts}%)`;
+      }
+    },
+    [numOfProducts]
+  );
 
   const handleArrBackClick = () => {
     --num.current;
@@ -103,20 +106,30 @@ export const Products = ({ products, setProductsInCart, setProducts, filterProdu
   };
 
   useEffect(() => {
-    if (carouselRef.current) {
-      carouselRef.current.style.width = 100 / numOfProducts + "%";
+    if (products) {
+      Array.from(carouselRef?.current?.children).forEach((productInDOM) => {
+        productInDOM.style.width = productInDOM.style.width = 100 / numOfProducts + "%";
+      });
     }
+
+    if (carouselRef.current) {
+      carouselRef.current.style.width = numOfProducts + "00%";
+    }
+  }, [products, numOfProducts]);
+
+  useEffect(() => {
+    console.log(carouselRef);
 
     const interval = setInterval(() => {
       ++num.current;
-      if (num.current >= numOfProducts) {
+      if (num.current === numOfProducts) {
         num.current = 0;
       }
       assingTransformProperty(carouselRef);
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [num, numOfProducts]);
+  }, [num, numOfProducts, assingTransformProperty]);
 
   const handleArrForwardClick = () => {
     ++num.current;
@@ -146,7 +159,7 @@ export const Products = ({ products, setProductsInCart, setProducts, filterProdu
         <Loading />
       ) : products.length > 0 ? (
         <div className=" w-11/12 shadow-6xl mx-auto m-10 relative h-boxCont overflow-hidden">
-          <div ref={carouselRef} className="transition duration-700 ease-out flex flex-col  h-prodCont mt-10  flex-wrap bg-red-400 ">
+          <div ref={carouselRef} className="transition duration-700 ease-out flex h-prodCont mt-10  flex-no-wrap ">
             {products.map((product) => {
               return (
                 <div key={product.id} className="w-full h-prodCont">
