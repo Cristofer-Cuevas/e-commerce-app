@@ -87,7 +87,7 @@ const AddedToCartModal = ({ productsInCart }) => {
     <>
       {productAddedToCart ? (
         <div className="flex jutify-center top-0 fixed w-full h-screen bg-opact">
-          <div className="w-11/12 h-96 rounded mx-auto mt-12 p-4 bg-white">
+          <div className="w-11/12 h-96 rounded mx-auto mt-12 p-4 bg-white md:w-128">
             <p>Product added to cart</p>
             <div className="flex w-full mx-auto my-12">
               <img className="w-24 h-24" src={productAddedToCart?.image} alt="product" />
