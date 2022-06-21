@@ -17,10 +17,8 @@ const SignIn = ({ user, setUser }) => {
 
     const email = emailInpRef.current.value;
     const password = passwordInpRef.current.value;
-    console.log("hola");
 
     if (!email || !password) {
-      console.log("indeed");
       setFormState({ isFormIncomplete: true });
     } else {
       const userCredentials = {
@@ -39,7 +37,6 @@ const SignIn = ({ user, setUser }) => {
             setCookie(res.token);
             navigate("/", { replace: true });
           }
-          console.log(res);
         });
     }
   };

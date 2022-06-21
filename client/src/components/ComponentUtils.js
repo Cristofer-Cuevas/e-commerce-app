@@ -91,7 +91,6 @@ export const Products = ({ products, setProductsInCart, setProducts, filterProdu
   }, [numOfProducts, products]);
 
   useEffect(() => {
-    console.log(filterProducts);
     if (filterProducts?.current?.length > 0) {
       setProducts(filterProducts.current.filter((product) => product.title.toLowerCase().includes(inputSearchValue?.toLowerCase() || "")));
     }
@@ -129,8 +128,6 @@ export const Products = ({ products, setProductsInCart, setProducts, filterProdu
   }, [products, numOfProducts]);
 
   useEffect(() => {
-    console.log(carouselRef);
-
     const interval = setInterval(() => {
       ++num.current;
       if (num.current >= numOfProducts.current) {

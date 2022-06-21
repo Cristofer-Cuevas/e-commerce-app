@@ -11,8 +11,8 @@ const Account = ({ user }) => {
 
   useEffect(() => {
     if (user) {
+      console.log("");
       getUserProducts("purchased-products").then((res) => {
-        console.log(res);
         setProducts(res.products);
       });
     }

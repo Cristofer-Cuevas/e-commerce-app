@@ -49,7 +49,6 @@ const SignUp = ({ user, setUser }) => {
             setCookie(res.token);
             navigate("/");
           }
-          console.log(res);
         });
     }
   };

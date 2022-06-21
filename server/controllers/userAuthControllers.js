@@ -59,7 +59,6 @@ userAuthControllers.signup = async (req, res) => {
   const { success, token, user, userExists, anInternalErrorOccurred } = await response.json();
 
   if (success) {
-    console.log(user);
     const { rows: credit } = await pool.query("INSERT INTO credits VALUES($1, $2) RETURNING credit", [user.id, 5000]);
     user.credit = credit[0].credit;
     res.json({ success, token, user });

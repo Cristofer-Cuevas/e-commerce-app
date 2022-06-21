@@ -82,12 +82,10 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
         })
       ).then((res) => {
         if (res.success) {
-          console.log(user);
           user.credit = res.credit;
           setProductsInCart([]);
           setModal(true);
         }
-        console.log(res);
       });
     }
   };
