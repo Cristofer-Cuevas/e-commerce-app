@@ -1,7 +1,7 @@
 import { getCookie } from "../utils/utils";
 
 export const loginPost = ({ email, password }) => {
-  return fetch("http://localhost:3001/signin", {
+  return fetch("https://e-commerce-appl.herokuapp.com/signin", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -14,7 +14,7 @@ export const loginPost = ({ email, password }) => {
 };
 
 export const signupPost = ({ name, lastName, email, password }) => {
-  return fetch("http://localhost:3001/signup", {
+  return fetch("https://e-commerce-appl.herokuapp.com/signup", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -30,7 +30,7 @@ export const signupPost = ({ name, lastName, email, password }) => {
 
 export const postProductsToPurchase = (products) => {
   const cookieValue = getCookie();
-  return fetch("http://localhost:3001/purchase-products", {
+  return fetch("https://e-commerce-appl.herokuapp.com/purchase-products", {
     method: "POST",
     headers: new Headers({
       Authorization: cookieValue,

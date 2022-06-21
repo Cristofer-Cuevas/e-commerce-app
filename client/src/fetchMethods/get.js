@@ -3,7 +3,7 @@ import { getCookie } from "../utils/utils.js";
 export const getAuth = () => {
   const cookieValue = getCookie();
 
-  return fetch("http://localhost:3001/protected", {
+  return fetch("https://e-commerce-appl.herokuapp.com/protected", {
     method: "GET",
     headers: new Headers({
       Authorization: cookieValue,
@@ -13,14 +13,14 @@ export const getAuth = () => {
 };
 
 //Getting contacts
-export const getProducts = (products) => fetch(`http://localhost:3001/${products}`).then((res) => res.json());
+export const getProducts = (products) => fetch(`https://e-commerce-appl.herokuapp.com/${products}`).then((res) => res.json());
 
 // Getting Messages
 
 export const getUserProducts = (typeOfProducts) => {
   const cookieValue = getCookie();
 
-  return fetch(`http://localhost:3001/${typeOfProducts}`, {
+  return fetch(`https://e-commerce-appl.herokuapp.com/${typeOfProducts}`, {
     method: "GET",
     headers: new Headers({
       Authorization: cookieValue,
