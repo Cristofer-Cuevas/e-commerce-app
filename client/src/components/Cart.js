@@ -110,47 +110,51 @@ const Cart = ({ setProductsInCart, productsInCart, user }) => {
           <img className="ml-4" src={closeIcon} onClick={handleCloseCart} alt="Close" />
           <h2 className="text-2xl font-bold text-center w-11/12 text-white">YOUR CART</h2>
         </div>
-        {productsInCart
-          ? productsInCart.map((product) => {
-              return (
-                <div key={product.id} data-index={product.id} className="flex w-4/5 mt-12 border-b border-gray-400 border-solid pb-4">
-                  <div className="w-12">
-                    <img src={product.image} alt="product" />
-                  </div>
-                  <div className="ml-10">
-                    <div className="w-56">
-                      <h3 className="font-medium text-sm">{product.title}</h3>
-                      <div className="flex  items-center my-4 border border-black border-solid w-fit py-1 px-2">
-                        <button data-index={product.id} onClick={handleSubtractClick} className="mr-4 w-4">
-                          -
-                        </button>
-                        <input className="w-6 text-center" type="number" ref={inpuRef} value={product.quantity} readOnly />
-                        <button data-index={product.id} onClick={handleAddClick} className="ml-4">
-                          +
-                        </button>
+        <div className="w-11/12 md:w-11/12 md:flex md:justify-between">
+          <div className="">
+            {productsInCart
+              ? productsInCart.map((product) => {
+                  return (
+                    <div key={product.id} data-index={product.id} className="flex justify-center w-full mt-12 border-b border-gray-400 border-solid pb-4 md:w-96 lg:w-184">
+                      <div className="w-12 lg:w-24">
+                        <img src={product.image} alt="product" />
+                      </div>
+                      <div className="ml-10">
+                        <div className="w-56">
+                          <h3 className="font-medium text-sm lg:text-lg">{product.title}</h3>
+                          <div className="flex  items-center my-4 border border-black border-solid w-fit py-1 px-2">
+                            <button data-index={product.id} onClick={handleSubtractClick} className="mr-4 w-4">
+                              -
+                            </button>
+                            <input className="w-6 text-center" type="number" ref={inpuRef} value={product.quantity} readOnly />
+                            <button data-index={product.id} onClick={handleAddClick} className="ml-4">
+                              +
+                            </button>
+                          </div>
+                        </div>
+                        <div className="">
+                          <p className="font-medium">$ {product.price}</p>
+                          <button className="text-xs" data-index={product.id} onClick={handleRemoveClick}>
+                            Remove
+                          </button>
+                        </div>
                       </div>
                     </div>
-                    <div className="">
-                      <p className="font-medium">$ {product.price}</p>
-                      <button className="text-xs" data-index={product.id} onClick={handleRemoveClick}>
-                        Remove
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              );
-            })
-          : null}
-        <div className="w-4/5">
-          {totalCost}
-          <p className="text-sm mt-2">
-            Available credit: <span className="text-green-600 font-medium">$ {user?.credit || 0}</span>
-          </p>
-          <button onClick={handleCloseModal} data-modal="show" className="text-white bg-sky-700 w-full my-6 h-12">
-            PROCEED TO BUY
-          </button>
+                  );
+                })
+              : null}
+          </div>
+          <div className="md:w-80 lg:w-96">
+            {totalCost}
+            <p className="text-sm mt-2">
+              Available credit: <span className="text-green-600 font-medium">$ {user?.credit || 0}</span>
+            </p>
+            <button onClick={handleCloseModal} data-modal="show" className="text-white bg-sky-700 w-full my-6 h-12">
+              PROCEED TO BUY
+            </button>
+          </div>
         </div>
-        <div ref={modalRef} className="invisible shadow-6xl fixed w-11/12 bg-white top-1/4 rounded">
+        <div ref={modalRef} className="invisible shadow-6xl fixed w-11/12 bg-white top-1/4 rounded md:w-184">
           <div className="flex justify-between items-center px-4 bg-red-500 text-white h-14 rounded-t">
             <h3>Confirm purchase</h3>
             <img className="w-6" onClick={handleCloseModal} data-modal="hide" src={closeIcon} alt="Close" />
@@ -178,7 +182,7 @@ const SuccessModal = ({ setModal }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-11/12 fixed top-20 shadow-2xl">
+    <div className="w-11/12 fixed top-20 shadow-2xl md:w-184">
       <div className="bg-green-500 w-full h-40">
         <img className="absolute right-4 top-4" onClick={() => setModal(false)} src={closeIcon} alt="Close" />
         <img className="mx-auto pt-8 w-24" src={checkedIcon} alt="Checked" />
